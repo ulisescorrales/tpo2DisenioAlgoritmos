@@ -242,7 +242,7 @@ public class TP2DisenioAlgoritmos {
                         System.out.printf("Borrado: %d - %d%n",parejaMujerActual,mujerPreferida);
                         System.out.printf("Pareja: %d - %d%n",hombreActual,mujerPreferida);
                 }else{
-                    //Lo rechaza, sigue en lista de espera
+                    //No tiene pareja candidata, sigue en lista de espera
                     hombresLibres.add(hombreActual);
                 }
             }
