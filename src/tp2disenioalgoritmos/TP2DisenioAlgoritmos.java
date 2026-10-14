@@ -170,20 +170,6 @@ public class TP2DisenioAlgoritmos {
         return posHombreActual < posHombre2;
     }
 
-    public static int mujer_pareja_actual(int parejas_H[], int mujer) {
-        int parejaActual = -1;
-        int n = parejas_H.length;
-        int i = 0;
-        while (parejaActual == -1 && i < n) {
-            if (parejas_H[i] == mujer) {
-                parejaActual = i;
-            } else {
-                i++;
-            }
-        }
-        return parejaActual;
-    }
-
     public static void main(String[] args) {
         
         int n = 3;
@@ -202,9 +188,10 @@ public class TP2DisenioAlgoritmos {
         //cargarDatosFijos(preferencias_H, preferencias_M, forbidden, n);
 
         int parejas_H[] = new int[n];
+        int parejas_M[] = new int[n];
         for (int i = 0; i < n; i++) {
             //-1: no tiene pareja
-            parejas_H[i] = -1;
+            parejas_M[i] = -1;
         }
 
         Queue hombresLibres = new LinkedList();
@@ -228,16 +215,18 @@ public class TP2DisenioAlgoritmos {
             //Si se encontró una potencial pareja
             if (mujerPreferida != -1) {
                 System.out.println("Ficha a la mujer: "+mujerPreferida);
-                int parejaMujerActual = mujer_pareja_actual(parejas_H, mujerPreferida);
+                int parejaMujerActual = parejas_M[mujerPreferida];
                 //Si la mujer no está en pareja con otro
                 if (parejaMujerActual == -1) {
                     //No tiene pareja, emparejar
                     parejas_H[hombreActual] = mujerPreferida;
+                    parejas_M[mujerPreferida]=hombreActual;
                     System.out.printf("Pareja: %d - %d%n",hombreActual,mujerPreferida);
                 } else if (mujerPrefiereA(rankM, mujerPreferida, hombreActual, parejaMujerActual)) {
                         //Prefiere al hombre entrante
                         parejas_H[hombreActual] = mujerPreferida;
                         parejas_H[parejaMujerActual] = -1;
+                        parejas_M[mujerPreferida]=hombreActual;
                         hombresLibres.add(parejaMujerActual);
                         System.out.printf("Borrado: %d - %d%n",parejaMujerActual,mujerPreferida);
                         System.out.printf("Pareja: %d - %d%n",hombreActual,mujerPreferida);
