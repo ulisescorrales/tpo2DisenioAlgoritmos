@@ -17,7 +17,7 @@ public class TP2DisenioAlgoritmos {
     /**
      * @param args the command line arguments
      */
-    public static void simularDatos(int preferencias_H[][], int preferencias_M[][], boolean forbidden[][], int n){
+    public static void simularDatos(int preferencias_H[][], int preferencias_M[][], boolean forbidden[][], int n) {
         Random ran = new Random();
         int aleatorio;
         LinkedList numerosUsados;
@@ -75,106 +75,98 @@ public class TP2DisenioAlgoritmos {
     }
 
     public static void cargarDatosFijos(int preferencias_H[][], int preferencias_M[][], boolean forbidden[][], int n) {
-    // Valores fijos solicitados (n = 3)
-    int[][] datosH = {
-        {1, 0, 2},
-        {2, 1, 0},
-        {1, 0, 2}
-    };
+        // Valores fijos solicitados (n = 3)
+        int[][] datosH = {
+            {1, 0, 2},
+            {2, 1, 0},
+            {1, 0, 2}
+        };
 
-    int[][] datosM = {
-        {2, 1, 0},
-        {2, 1, 0},
-        {0, 1, 2}
-    };
+        int[][] datosM = {
+            {2, 1, 0},
+            {2, 1, 0},
+            {0, 1, 2}
+        };
 
-    // Rellenar preferencias de hombres
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            preferencias_H[i][j] = datosH[i][j];
+        // Rellenar preferencias de hombres
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                preferencias_H[i][j] = datosH[i][j];
+            }
         }
-    }
 
-    // Rellenar preferencias de mujeres
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            preferencias_M[i][j] = datosM[i][j];
+        // Rellenar preferencias de mujeres
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                preferencias_M[i][j] = datosM[i][j];
+            }
         }
-    }
 
-    // Reiniciar matriz de prohibidos y asignar (0-1), (1-2), (2-0)
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            forbidden[i][j] = false;
+        // Reiniciar matriz de prohibidos y asignar (0-1), (1-2), (2-0)
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                forbidden[i][j] = false;
+            }
         }
-    }
-    forbidden[0][1] = true;
-    forbidden[1][2] = true;
-    forbidden[2][0] = true;
+        forbidden[0][1] = true;
+        forbidden[1][2] = true;
+        forbidden[2][0] = true;
 
-    // Imprimir datos
-    System.out.println("Preferencia de hombres");
-    for (int i = 0; i < n; i++) {
-        System.out.println("Hombre " + i + ":");
-        for (int j = 0; j < n; j++) {
-            System.out.print(preferencias_H[i][j] + " ");
+        // Imprimir datos
+        System.out.println("Preferencia de hombres");
+        for (int i = 0; i < n; i++) {
+            System.out.println("Hombre " + i + ":");
+            for (int j = 0; j < n; j++) {
+                System.out.print(preferencias_H[i][j] + " ");
+            }
+            System.out.println("");
         }
-        System.out.println("");
-    }
 
-    System.out.println("Preferencia de mujeres");
-    for (int i = 0; i < n; i++) {
-        System.out.println("Mujer " + i + ":");
-        for (int j = 0; j < n; j++) {
-            System.out.print(preferencias_M[i][j] + " ");
+        System.out.println("Preferencia de mujeres");
+        for (int i = 0; i < n; i++) {
+            System.out.println("Mujer " + i + ":");
+            for (int j = 0; j < n; j++) {
+                System.out.print(preferencias_M[i][j] + " ");
+            }
+            System.out.println("");
         }
-        System.out.println("");
-    }
 
-    System.out.println("Prohibidos: ");
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (forbidden[i][j]) {
-                System.out.printf("(%d-%d)%n", i, j);
+        System.out.println("Prohibidos: ");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (forbidden[i][j]) {
+                    System.out.printf("(%d-%d)%n", i, j);
+                }
             }
         }
     }
-}
-    public static boolean mujerTienePareja(int parejas_H[], int nro_mujer) {
-        boolean tienePareja = false;
-        int i = 0;
-        int n = parejas_H.length;
-        while (i < n && !tienePareja) {
-            if (parejas_H[i] == nro_mujer) {
-                tienePareja = true;
-            }
-        }
-        return tienePareja;
+
+    public static boolean mujerPrefiereA(int[][] rankM, int w, int m1, int m2) {
+        // Retorna true si el ranking de m1 es menor (mejor) que el de m2
+        return rankM[w][m1] < rankM[w][m2];
     }
 
-    public static boolean mujerPrefiereA(int[][] rankM, int mujerActual, int hombreActual, int hombre2) {
-        //Método para calcular si hombreActual es preferido antes que hombre2 para una mujerActual dada presente en rankM
-        int posHombre2 = -1;
-        int posHombreActual = -1;
-        int n = rankM.length;
-        int i=0;
-        while(posHombreActual==-1 && posHombreActual==-1 && i<n){
-            if (rankM[mujerActual][i] == hombreActual) {
-                posHombreActual = i;
-            } else if (rankM[mujerActual][i] == hombre2) {
-                posHombre2 = i;
+    public static int[][] construirRankM(int[][] prefM) {
+        int n = prefM.length;
+        int[][] rankM = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int r = 0; r < n; r++) {
+                // El hombre que está en la posición 'r' de las preferencias de la mujer 'i'
+                int hombre = prefM[i][r];
+
+                // Le asignamos el valor del ranking 'r' (menor valor = mayor preferencia)
+                rankM[i][hombre] = r;
             }
-            i++;
         }
-        //Retorna si hombreActual es preferido antes que hombre2
-        return posHombreActual < posHombre2;
+        return rankM;
     }
 
     public static void main(String[] args) {
-        
+
         int n = 3;
-        int[][] rankH = new int[n][n];
-        int[][] rankM = new int[n][n];
+        int[][] prefH = new int[n][n]; //Preferencias hombres
+        int[][] prefM = new int[n][n];//Preferencias mujeres
 
         int propuestos_H[] = new int[n];
         for (int i = 0; i < n; i++) {
@@ -184,14 +176,16 @@ public class TP2DisenioAlgoritmos {
         //Parejas de prohibidos. Para el hombre i y la mujer j, si forbiden[i][j]=1 entonces es una pareja prohibida.
         boolean forbidden[][] = new boolean[n][n];
 
-        simularDatos(rankH, rankM, forbidden, n);
-        //cargarDatosFijos(preferencias_H, preferencias_M, forbidden, n);
+        simularDatos(prefH, prefM, forbidden, n);
+
+        int[][] rankM = construirRankM(prefM);
 
         int parejas_H[] = new int[n];
         int parejas_M[] = new int[n];
         for (int i = 0; i < n; i++) {
             //-1: no tiene pareja
             parejas_M[i] = -1;
+            parejas_H[i] = -1;
         }
 
         Queue hombresLibres = new LinkedList();
@@ -200,53 +194,53 @@ public class TP2DisenioAlgoritmos {
         }
         while (!hombresLibres.isEmpty()) {
             int hombreActual = (int) hombresLibres.poll();
-            System.out.println("Busca el hombre: "+hombreActual);
+            System.out.println("Busca el hombre: " + hombreActual);
             int contador_mujer = propuestos_H[hombreActual];
             int mujerPreferida = -1;
             //Buscar a la mejor mujer que todavía no ha sido propuesta y que no esté prohibida
-             while (contador_mujer < n && mujerPreferida == -1){
-                mujerPreferida = rankH[hombreActual][contador_mujer];
+            while (contador_mujer < n && mujerPreferida == -1) {
+                mujerPreferida = prefH[hombreActual][contador_mujer];
                 if (forbidden[hombreActual][mujerPreferida]) {
                     mujerPreferida = -1;
                 }
                 contador_mujer++;
             }
-            propuestos_H[hombreActual]=contador_mujer;
+            propuestos_H[hombreActual] = contador_mujer;
             //Si se encontró una potencial pareja
             if (mujerPreferida != -1) {
-                System.out.println("Ficha a la mujer: "+mujerPreferida);
+                System.out.println("Ficha a la mujer: " + mujerPreferida);
                 int parejaMujerActual = parejas_M[mujerPreferida];
                 //Si la mujer no está en pareja con otro
                 if (parejaMujerActual == -1) {
                     //No tiene pareja, emparejar
                     parejas_H[hombreActual] = mujerPreferida;
-                    parejas_M[mujerPreferida]=hombreActual;
-                    System.out.printf("Pareja: %d - %d%n",hombreActual,mujerPreferida);
+                    parejas_M[mujerPreferida] = hombreActual;
+                    System.out.printf("Pareja: %d - %d%n", hombreActual, mujerPreferida);
                 } else if (mujerPrefiereA(rankM, mujerPreferida, hombreActual, parejaMujerActual)) {
-                        //Prefiere al hombre entrante
-                        parejas_H[hombreActual] = mujerPreferida;
-                        parejas_H[parejaMujerActual] = -1;
-                        parejas_M[mujerPreferida]=hombreActual;
-                        hombresLibres.add(parejaMujerActual);
-                        System.out.printf("Borrado: %d - %d%n",parejaMujerActual,mujerPreferida);
-                        System.out.printf("Pareja: %d - %d%n",hombreActual,mujerPreferida);
-                }else{
+                    //Prefiere al hombre entrante
+                    parejas_H[hombreActual] = mujerPreferida;
+                    parejas_H[parejaMujerActual] = -1;
+                    parejas_M[mujerPreferida] = hombreActual;
+                    hombresLibres.add(parejaMujerActual);
+                    System.out.printf("Borrado: %d - %d%n", parejaMujerActual, mujerPreferida);
+                    System.out.printf("Pareja: %d - %d%n", hombreActual, mujerPreferida);
+                } else {
                     //No tiene pareja candidata, sigue en lista de espera
                     hombresLibres.add(hombreActual);
                 }
             }
         }
-        
+
         //Imprimir resultados
         System.out.println("Parejas formadas:");
         for (int i = 0; i < parejas_H.length; i++) {
             String mujer;
-            if(parejas_H[i]>-1){
-                mujer=Integer.toString(parejas_H[i]);
-            }else{
-                mujer="Sin pareja";
+            if (parejas_H[i] > -1) {
+                mujer = Integer.toString(parejas_H[i]);
+            } else {
+                mujer = "Sin pareja";
             }
-            System.out.printf("(%d - %s)%n",i,mujer);
+            System.out.printf("(%d - %s)%n", i, mujer);
         }
     }
 }
